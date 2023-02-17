@@ -26,7 +26,8 @@ func _physics_process(delta: float) -> void:
 	_shot_cnt += 1
 	var shot_rate = _get_shot_rate()
 	if _shot_cnt % shot_rate == 0:
-		_shot()
+		#_shot()
+		pass
 
 func _shot() -> void:
 	var deg = 90
