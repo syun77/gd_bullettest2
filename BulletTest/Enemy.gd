@@ -28,9 +28,30 @@ class DelayedBatteryInfo:
 
 onready var _spr = $Enemy
 
+enum eType {
+	AIM,
+	ALL_RANGE,
+	GRAVITY,
+	GRAVITY2,
+	NEEDLE,
+	WHIP,
+	NWAY,
+	NWAY_4_5,
+	NWAY_AND_MOVE
+}
+export(int, "AIM", "ALL_RANGE", "GRAVITY", "GRAVITY2", "NEEDLE", "WHIP", "N-WAY", "N-WAY(4-5)", "N-WAY AND MOVE") var type = eType.AIM
+
 var _cnt = 0
 var _timer = 0.0
 var _batteries = [] # 弾のディレイ発射用配列.
+var _cnt2 = 0
+var _cnt3 = 0
+var _target = Vector2.ZERO
+var _start = Vector2.ZERO
+
+func _ready() -> void:
+	_target = position
+	_start = position
 
 func _physics_process(delta: float) -> void:
 	_timer += delta
@@ -38,11 +59,87 @@ func _physics_process(delta: float) -> void:
 	
 	_update_batteies(delta)
 	
-	if _cnt%60 == 0:
-		var aim = _aim()
-		#_bullet(aim, 500)
-		for i in range(7):
-			_nway(3, aim, 45, 300+50*i, 0.1 * i)
+	# 移動処理.
+	match type:
+		eType.WHIP:
+			# 移動する.
+			if _cnt%120 == 0:
+				if _cnt3%2 == 0:
+					_target = _start + Vector2(120, 0)
+				else:
+					_target = _start + Vector2(-120, 0)
+				_cnt3 += 1
+		eType.NWAY_AND_MOVE:
+			# 移動する.
+			if _cnt%120 == 0:
+				if _cnt3%2 == 0:
+					_target = _start + Vector2(120, 0)
+				else:
+					_target = _start + Vector2(-120, 0)
+				_cnt3 += 1
+		_:
+			_target = _start
+	position += (_target - position) * 0.01
+	
+	var aim = _aim()
+	# 弾を撃つ.
+	match type:
+		eType.AIM:
+			if _cnt%60 == 0:
+				_bullet(aim, 500)
+		eType.ALL_RANGE:
+			if _cnt%60 == 0:
+				# 全方位弾
+				var cnt = 60 # 発射する弾の数
+				var d = 360 / cnt # 角度差を求める.
+				for i in range(cnt):
+					var deg = d * i # 発射角度を求める.
+					_bullet(deg, 300)
+		eType.GRAVITY:
+			if _cnt%10 == 0:
+				var deg = rand_range(60, 120)
+				for i in range(3):
+					_bullet(deg, 300, i*0.05, 0, 10)
+		eType.GRAVITY2:
+			if _cnt%4 == 0:
+				if _cnt2 < 10:
+					_bullet(220, 500, 0, 10, 0)
+				elif _cnt2 < 20:
+					_bullet(270, 500, 0, 0, 0)
+				else:
+					_bullet(320, 500, 0, -10, 0)
+					if _cnt2 >= 30:
+						_cnt2 = 0
+				_cnt2 += 1
+		eType.NEEDLE:
+			if _cnt%60 == 0:
+				# 針弾を発射.
+				for i in range(5):
+					var delay = i * 0.05
+					_bullet(aim, 500, delay)
+		eType.WHIP:
+			if _cnt%120 == 0:
+				# ウィップ弾を発射
+				for i in range(10):
+					var deg = 300+50*i # 角度
+					var delay = i * 0.05 # 遅延タイマー
+					_bullet(aim, deg, delay)
+		eType.NWAY:
+			if _cnt%60 == 0:
+				_nway(5, aim, 60, 300)
+		eType.NWAY_4_5:
+			if _cnt%20 == 0:
+				if _cnt2%2 == 0:
+					_nway(5, 270, 80, 200)
+				else:
+					_nway(4, 270, 80, 200)
+				_cnt2 += 1
+		eType.NWAY_AND_MOVE:
+			if _cnt%120 == 0:
+				for i in range(7):
+					var d = _cnt2%3
+					_nway(3+d, aim, 60, 300+50*i, 0.1 * i)
+				_cnt2 += 1
 
 func _aim() -> float:
 	return Common.get_aim(position)

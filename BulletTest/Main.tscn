@@ -49,12 +49,14 @@ shader_param/ofs_uv = null
 [sub_resource type="Environment" id=5]
 background_mode = 4
 background_canvas_max_layer = 3
-glow_intensity = 0.11
-glow_bloom = 0.1
+glow_enabled = true
+glow_intensity = 1.48
+glow_strength = 0.81
+glow_bloom = 0.22
 glow_blend_mode = 0
-glow_hdr_threshold = 2.1
-glow_hdr_luminance_cap = 3.0
-glow_hdr_scale = 1.1
+glow_hdr_threshold = 0.98
+glow_hdr_luminance_cap = 13.97
+glow_hdr_scale = 1.48
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
@@ -83,7 +85,8 @@ follow_viewport_enable = true
 position = Vector2( 512, 512 )
 
 [node name="Enemy" parent="MainLayer" instance=ExtResource( 4 )]
-position = Vector2( 512, 64 )
+position = Vector2( 512, 128 )
+type = 7
 
 [node name="ShotLayer" type="CanvasLayer" parent="."]
 follow_viewport_enable = true
