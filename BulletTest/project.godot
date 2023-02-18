@@ -10,9 +10,19 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Area2D",
+"class": "Bullet",
+"language": "GDScript",
+"path": "res://Bullet.gd"
+}, {
+"base": "Area2D",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://Enemy.gd"
+}, {
+"base": "Node2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player.gd"
 }, {
 "base": "Area2D",
 "class": "Shot2",
@@ -20,7 +30,9 @@ _global_script_classes=[ {
 "path": "res://Shot2.gd"
 } ]
 _global_script_class_icons={
+"Bullet": "",
 "Enemy": "",
+"Player": "",
 "Shot2": ""
 }
 

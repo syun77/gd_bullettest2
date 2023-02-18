@@ -88,6 +88,9 @@ position = Vector2( 512, 64 )
 [node name="ShotLayer" type="CanvasLayer" parent="."]
 follow_viewport_enable = true
 
+[node name="BulletLayer" type="CanvasLayer" parent="."]
+follow_viewport_enable = true
+
 [node name="ParticleLayer" type="CanvasLayer" parent="."]
 follow_viewport_enable = true
 
