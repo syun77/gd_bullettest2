@@ -26,7 +26,7 @@ class DelayedBatteryInfo:
 		return false
 
 
-onready var _spr = $Enemy
+@onready var _spr = $Enemy
 
 enum eType {
 	AIM,
@@ -39,7 +39,7 @@ enum eType {
 	NWAY_4_5,
 	NWAY_AND_MOVE
 }
-export(int, "AIM", "ALL_RANGE", "GRAVITY", "GRAVITY2", "NEEDLE", "WHIP", "N-WAY", "N-WAY(4-5)", "N-WAY AND MOVE") var type = eType.AIM
+@export var type := eType.AIM
 
 var _cnt = 0
 var _timer = 0.0
@@ -97,7 +97,7 @@ func _physics_process(delta: float) -> void:
 					_bullet(deg, 300)
 		eType.GRAVITY:
 			if _cnt%10 == 0:
-				var deg = rand_range(60, 120)
+				var deg = randf_range(60, 120)
 				for i in range(3):
 					_bullet(deg, 300, i*0.05, 0, 10)
 		eType.GRAVITY2:
@@ -152,7 +152,7 @@ func _bullet(deg:float, speed:float, delay:float=0, ax:float=0, ay:float=0) -> v
 		return
 	
 	# 発射する.
-	var b = BulletObj.instance()
+	var b = BulletObj.instantiate()
 	b.position = position
 	b.set_velocity(deg, speed)
 	b.set_accel(ax, ay)

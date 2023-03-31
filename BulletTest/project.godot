@@ -6,45 +6,24 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "Area2D",
-"class": "Bullet",
-"language": "GDScript",
-"path": "res://Bullet.gd"
-}, {
-"base": "Area2D",
-"class": "Enemy",
-"language": "GDScript",
-"path": "res://Enemy.gd"
-}, {
-"base": "Node2D",
-"class": "Player",
-"language": "GDScript",
-"path": "res://Player.gd"
-}, {
-"base": "Area2D",
-"class": "Shot2",
-"language": "GDScript",
-"path": "res://Shot2.gd"
-} ]
-_global_script_class_icons={
-"Bullet": "",
-"Enemy": "",
-"Player": "",
-"Shot2": ""
-}
+config_version=5
 
 [application]
 
 config/name="gd_bullettest2"
 run/main_scene="res://Main.tscn"
+config/features=PackedStringArray("4.0")
 config/icon="res://icon.png"
 
 [autoload]
 
 Common="*res://Common.gd"
+
+[display]
+
+window/size/viewport_width=1024
+window/size/viewport_height=600
+window/stretch/mode="viewport"
 
 [gui]
 

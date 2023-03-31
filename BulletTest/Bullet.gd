@@ -7,7 +7,7 @@ var _accel = Vector2.ZERO # 加速度.
 
 ## 速度を設定する.
 func set_velocity(deg:float, speed:float) -> void:
-	var rad = deg2rad(deg)
+	var rad = deg_to_rad(deg)
 	_velocity.x = cos(rad) * speed
 	_velocity.y = -sin(rad) * speed
 

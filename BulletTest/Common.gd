@@ -41,7 +41,7 @@ func get_aim(pos:Vector2) -> float:
 		target = player.position
 	
 	var d = target - pos
-	var aim = rad2deg(atan2(-d.y, d.x))
+	var aim = rad_to_deg(atan2(-d.y, d.x))
 	
 	# ターゲットの座標を保存しておく.
 	_prev_target_pos = target
