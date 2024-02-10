@@ -1,7 +1,7 @@
 extends Area2D
 
-onready var _spr = $Sprite
-onready var _line = $Line2D
+@onready var _spr = $Sprite
+@onready var _line = $Line2D
 
 var _velocity = Vector2()
 
@@ -18,9 +18,9 @@ func vanish() -> void:
 	var spd = v.length()
 	for i in range(4):
 		var rad = atan2(-v.y, v.x)
-		var deg = rad2deg(rad)
-		deg += rand_range(-30, 30)
-		var speed = spd * rand_range(0.1, 0.5)
+		var deg = rad_to_deg(rad)
+		deg += randf_range(-30, 30)
+		var speed = spd * randf_range(0.1, 0.5)
 		Common.add_particle(position, 1.0, deg, speed)
 	queue_free()
 
@@ -31,7 +31,7 @@ func _ready() -> void:
 	
 	for i in range(8):
 		var rate = 1.0 - ((i+1) / 8.0)
-		var spr:Sprite = get_node("./Sprite%d"%i)
+		var spr:Sprite2D = get_node("./Sprite%d"%i)
 		spr.texture = _spr.texture
 		if Common.is_trail():
 			spr.scale.x = rate
@@ -41,7 +41,7 @@ func _ready() -> void:
 		
 
 func set_velocity(deg:float, speed:float) -> void:
-	var rad = deg2rad(deg)
+	var rad = deg_to_rad(deg)
 	_velocity.x = cos(rad) * speed
 	_velocity.y = -sin(rad) * speed
 
